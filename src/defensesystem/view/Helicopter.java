@@ -23,8 +23,8 @@ public class Helicopter extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/defensesystem/utils/helicopter-icon.png")).getImage());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = 20;
-        int y = 20;
+        int x = (screenSize.width / 2) - this.getWidth() - 5 / 2; 
+        int y = 50;
         this.setLocation(x, y);
 
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/defensesystem/utils/helicopter.gif"));
@@ -98,6 +98,7 @@ public class Helicopter extends javax.swing.JFrame {
         helicopterSlider.setPaintLabels(true);
         helicopterSlider.setPaintTicks(true);
         helicopterSlider.setSnapToTicks(true);
+        helicopterSlider.setValue(100);
         jPanel1.add(helicopterSlider);
         helicopterSlider.setBounds(600, 100, 70, 280);
 

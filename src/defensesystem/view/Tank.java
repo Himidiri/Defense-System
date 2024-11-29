@@ -23,8 +23,8 @@ public class Tank extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/defensesystem/utils/tank.png")).getImage());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (screenSize.width - this.getWidth()) / 2;
-        int y = 20;
+        int x = (screenSize.width / 2) - this.getWidth() - 5 / 2; 
+        int y = 30 * 2 + this.getHeight(); 
         this.setLocation(x, y);
         
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/defensesystem/utils/tank.gif"));
@@ -99,6 +99,7 @@ public class Tank extends javax.swing.JFrame {
         tankSlider.setPaintLabels(true);
         tankSlider.setPaintTicks(true);
         tankSlider.setSnapToTicks(true);
+        tankSlider.setValue(100);
         jPanel1.add(tankSlider);
         tankSlider.setBounds(600, 100, 70, 280);
 

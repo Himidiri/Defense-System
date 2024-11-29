@@ -22,8 +22,8 @@ public class MainController extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/defensesystem/utils/icon.png")).getImage());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (screenSize.width - this.getWidth()) / 2;
-        int y = screenSize.height - this.getHeight() - 100;
+        int x = (screenSize.width / 2) + 5 / 2; 
+        int y = 30 * 2 + this.getHeight(); 
         this.setLocation(x, y);
     }
 
@@ -58,7 +58,7 @@ public class MainController extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MainController");
         setBackground(new java.awt.Color(0, 153, 153));
-        setPreferredSize(new java.awt.Dimension(820, 500));
+        setPreferredSize(new java.awt.Dimension(820, 450));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
@@ -73,7 +73,7 @@ public class MainController extends javax.swing.JFrame {
         msgScrollPane.setViewportView(msgTextArea);
 
         jPanel1.add(msgScrollPane);
-        msgScrollPane.setBounds(390, 80, 390, 200);
+        msgScrollPane.setBounds(390, 80, 390, 180);
 
         sendMsgTextField.setBackground(new java.awt.Color(51, 51, 51));
         sendMsgTextField.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -84,14 +84,19 @@ public class MainController extends javax.swing.JFrame {
             }
         });
         jPanel1.add(sendMsgTextField);
-        sendMsgTextField.setBounds(390, 300, 300, 40);
+        sendMsgTextField.setBounds(390, 270, 300, 40);
 
         sendBtn.setBackground(new java.awt.Color(0, 102, 102));
         sendBtn.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         sendBtn.setForeground(new java.awt.Color(255, 255, 255));
         sendBtn.setText("Send");
+        sendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(sendBtn);
-        sendBtn.setBounds(700, 300, 80, 40);
+        sendBtn.setBounds(700, 270, 80, 40);
 
         selectDefence.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         selectDefence.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Defence", "Helicopter", "Tank", "Submarine" }));
@@ -183,7 +188,7 @@ public class MainController extends javax.swing.JFrame {
         positionLbl.setMinimumSize(new java.awt.Dimension(100, 20));
         positionLbl.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel1.add(positionLbl);
-        positionLbl.setBounds(390, 350, 130, 50);
+        positionLbl.setBounds(390, 310, 130, 50);
 
         positionSlider.setBackground(new java.awt.Color(0, 204, 204));
         positionSlider.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
@@ -193,8 +198,9 @@ public class MainController extends javax.swing.JFrame {
         positionSlider.setPaintLabels(true);
         positionSlider.setPaintTicks(true);
         positionSlider.setSnapToTicks(true);
+        positionSlider.setValue(0);
         jPanel1.add(positionSlider);
-        positionSlider.setBounds(380, 380, 410, 60);
+        positionSlider.setBounds(380, 340, 410, 60);
 
         infoTextArea.setBackground(new java.awt.Color(0, 0, 0));
         infoTextArea.setColumns(20);
@@ -204,7 +210,7 @@ public class MainController extends javax.swing.JFrame {
         jScrollPane1.setViewportView(infoTextArea);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 150, 350, 290);
+        jScrollPane1.setBounds(10, 150, 350, 250);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -212,13 +218,13 @@ public class MainController extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 49, Short.MAX_VALUE))
+                .addGap(0, 65, Short.MAX_VALUE))
         );
 
         pack();
@@ -235,6 +241,10 @@ public class MainController extends javax.swing.JFrame {
     private void sendPrivateCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendPrivateCheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_sendPrivateCheckBoxActionPerformed
+
+    private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendBtnActionPerformed
 
     /**
      * @param args the command line arguments

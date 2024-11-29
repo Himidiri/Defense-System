@@ -5,6 +5,7 @@
 package defensesystem.view;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
@@ -22,9 +23,14 @@ public class Submarine extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/defensesystem/utils/submarine.png")).getImage());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = screenSize.width - this.getWidth() - 50; 
-        int y = 50; 
+        int x = (screenSize.width / 2) + 5 / 2; 
+        int y = 50;
         this.setLocation(x, y);
+
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/defensesystem/utils/submarine.gif"));
+        Image scaledImage = originalIcon.getImage().getScaledInstance(350, -1, Image.SCALE_DEFAULT);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        submarineLbl.setIcon(scaledIcon);
     }
 
     /**
@@ -36,22 +42,237 @@ public class Submarine extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        submarineArareaLbl = new javax.swing.JLabel();
+        submarineEnergyLbl = new javax.swing.JLabel();
+        submarineAmmoCountLbl = new javax.swing.JLabel();
+        submarineOxigenSlider = new javax.swing.JSlider();
+        submarineScrollPane = new javax.swing.JScrollPane();
+        submarineMsgTextArea = new javax.swing.JTextArea();
+        submarineMsgTextField = new javax.swing.JTextField();
+        submarineAmmoCountSpinner = new javax.swing.JSpinner();
+        submarineSendBtn = new javax.swing.JButton();
+        submarineSonarOperationBtn = new javax.swing.JButton();
+        submarinePositionCheckBox = new javax.swing.JCheckBox();
+        submarineLbl = new javax.swing.JLabel();
+        submarineSoldierCountSpinner = new javax.swing.JSpinner();
+        submarineTridentMissileBtn = new javax.swing.JButton();
+        submarineShootBtn = new javax.swing.JButton();
+        submarineTomahawkMissileBtn = new javax.swing.JButton();
+        submarineEnergySlider = new javax.swing.JSlider();
+        submarineSoldierCountLbl = new javax.swing.JLabel();
+        submarineOxigenLbl = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 450));
+        setTitle("Submarine ");
+        setPreferredSize(new java.awt.Dimension(800, 450));
+        setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
+        jPanel1.setLayout(null);
+
+        submarineArareaLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        submarineArareaLbl.setForeground(new java.awt.Color(255, 204, 0));
+        submarineArareaLbl.setText("Area Not Cleared");
+        submarineArareaLbl.setMaximumSize(new java.awt.Dimension(100, 30));
+        submarineArareaLbl.setMinimumSize(new java.awt.Dimension(100, 30));
+        submarineArareaLbl.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel1.add(submarineArareaLbl);
+        submarineArareaLbl.setBounds(380, 20, 140, 30);
+
+        submarineEnergyLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        submarineEnergyLbl.setForeground(new java.awt.Color(255, 255, 255));
+        submarineEnergyLbl.setText("Energy");
+        jPanel1.add(submarineEnergyLbl);
+        submarineEnergyLbl.setBounds(610, 80, 70, 30);
+
+        submarineAmmoCountLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        submarineAmmoCountLbl.setForeground(new java.awt.Color(255, 255, 255));
+        submarineAmmoCountLbl.setText("Ammo Count :");
+        jPanel1.add(submarineAmmoCountLbl);
+        submarineAmmoCountLbl.setBounds(380, 120, 109, 30);
+
+        submarineOxigenSlider.setBackground(new java.awt.Color(255, 255, 255));
+        submarineOxigenSlider.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        submarineOxigenSlider.setForeground(new java.awt.Color(255, 255, 255));
+        submarineOxigenSlider.setMajorTickSpacing(20);
+        submarineOxigenSlider.setMinorTickSpacing(10);
+        submarineOxigenSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        submarineOxigenSlider.setPaintLabels(true);
+        submarineOxigenSlider.setPaintTicks(true);
+        submarineOxigenSlider.setSnapToTicks(true);
+        submarineOxigenSlider.setValue(100);
+        jPanel1.add(submarineOxigenSlider);
+        submarineOxigenSlider.setBounds(690, 120, 70, 280);
+
+        submarineMsgTextArea.setBackground(new java.awt.Color(0, 0, 0));
+        submarineMsgTextArea.setColumns(20);
+        submarineMsgTextArea.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        submarineMsgTextArea.setForeground(new java.awt.Color(255, 255, 255));
+        submarineMsgTextArea.setRows(5);
+        submarineMsgTextArea.setPreferredSize(new java.awt.Dimension(300, 114));
+        submarineScrollPane.setViewportView(submarineMsgTextArea);
+
+        jPanel1.add(submarineScrollPane);
+        submarineScrollPane.setBounds(10, 200, 350, 160);
+
+        submarineMsgTextField.setBackground(new java.awt.Color(51, 51, 51));
+        submarineMsgTextField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        submarineMsgTextField.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(submarineMsgTextField);
+        submarineMsgTextField.setBounds(10, 360, 280, 40);
+
+        submarineAmmoCountSpinner.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jPanel1.add(submarineAmmoCountSpinner);
+        submarineAmmoCountSpinner.setBounds(500, 120, 80, 30);
+
+        submarineSendBtn.setBackground(new java.awt.Color(0, 51, 51));
+        submarineSendBtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        submarineSendBtn.setForeground(new java.awt.Color(255, 255, 255));
+        submarineSendBtn.setText("Send");
+        submarineSendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submarineSendBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(submarineSendBtn);
+        submarineSendBtn.setBounds(290, 360, 70, 40);
+
+        submarineSonarOperationBtn.setBackground(new java.awt.Color(0, 102, 102));
+        submarineSonarOperationBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        submarineSonarOperationBtn.setForeground(new java.awt.Color(255, 255, 255));
+        submarineSonarOperationBtn.setText("Sonar Operation");
+        submarineSonarOperationBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        submarineSonarOperationBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        submarineSonarOperationBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        submarineSonarOperationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submarineSonarOperationBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(submarineSonarOperationBtn);
+        submarineSonarOperationBtn.setBounds(380, 230, 200, 50);
+
+        submarinePositionCheckBox.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        submarinePositionCheckBox.setForeground(new java.awt.Color(0, 204, 204));
+        submarinePositionCheckBox.setText("Position");
+        submarinePositionCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submarinePositionCheckBoxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(submarinePositionCheckBox);
+        submarinePositionCheckBox.setBounds(580, 20, 110, 30);
+        jPanel1.add(submarineLbl);
+        submarineLbl.setBounds(10, 10, 350, 180);
+
+        submarineSoldierCountSpinner.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jPanel1.add(submarineSoldierCountSpinner);
+        submarineSoldierCountSpinner.setBounds(500, 70, 80, 30);
+
+        submarineTridentMissileBtn.setBackground(new java.awt.Color(0, 102, 102));
+        submarineTridentMissileBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        submarineTridentMissileBtn.setForeground(new java.awt.Color(255, 255, 255));
+        submarineTridentMissileBtn.setText("Trident-2 Missile");
+        submarineTridentMissileBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        submarineTridentMissileBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        submarineTridentMissileBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        jPanel1.add(submarineTridentMissileBtn);
+        submarineTridentMissileBtn.setBounds(380, 350, 200, 50);
+
+        submarineShootBtn.setBackground(new java.awt.Color(0, 102, 102));
+        submarineShootBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        submarineShootBtn.setForeground(new java.awt.Color(255, 255, 255));
+        submarineShootBtn.setText("Shoot");
+        submarineShootBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        submarineShootBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        submarineShootBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        submarineShootBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submarineShootBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(submarineShootBtn);
+        submarineShootBtn.setBounds(380, 170, 200, 50);
+
+        submarineTomahawkMissileBtn.setBackground(new java.awt.Color(0, 102, 102));
+        submarineTomahawkMissileBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        submarineTomahawkMissileBtn.setForeground(new java.awt.Color(255, 255, 255));
+        submarineTomahawkMissileBtn.setText("Tomahawk Missile");
+        submarineTomahawkMissileBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        submarineTomahawkMissileBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        submarineTomahawkMissileBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        submarineTomahawkMissileBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submarineTomahawkMissileBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(submarineTomahawkMissileBtn);
+        submarineTomahawkMissileBtn.setBounds(380, 290, 200, 50);
+
+        submarineEnergySlider.setBackground(new java.awt.Color(255, 255, 255));
+        submarineEnergySlider.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        submarineEnergySlider.setForeground(new java.awt.Color(255, 255, 255));
+        submarineEnergySlider.setMajorTickSpacing(20);
+        submarineEnergySlider.setMinorTickSpacing(10);
+        submarineEnergySlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        submarineEnergySlider.setPaintLabels(true);
+        submarineEnergySlider.setPaintTicks(true);
+        submarineEnergySlider.setSnapToTicks(true);
+        submarineEnergySlider.setValue(100);
+        jPanel1.add(submarineEnergySlider);
+        submarineEnergySlider.setBounds(600, 120, 70, 280);
+
+        submarineSoldierCountLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        submarineSoldierCountLbl.setForeground(new java.awt.Color(255, 255, 255));
+        submarineSoldierCountLbl.setText("Soldier Count : ");
+        jPanel1.add(submarineSoldierCountLbl);
+        submarineSoldierCountLbl.setBounds(380, 70, 116, 30);
+
+        submarineOxigenLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        submarineOxigenLbl.setForeground(new java.awt.Color(255, 255, 255));
+        submarineOxigenLbl.setText("Oxigen");
+        jPanel1.add(submarineOxigenLbl);
+        submarineOxigenLbl.setBounds(700, 80, 60, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 796, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 922, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 122, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 493, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 74, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void submarineSendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submarineSendBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_submarineSendBtnActionPerformed
+
+    private void submarineSonarOperationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submarineSonarOperationBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_submarineSonarOperationBtnActionPerformed
+
+    private void submarinePositionCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submarinePositionCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_submarinePositionCheckBoxActionPerformed
+
+    private void submarineShootBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submarineShootBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_submarineShootBtnActionPerformed
+
+    private void submarineTomahawkMissileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submarineTomahawkMissileBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_submarineTomahawkMissileBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,5 +310,25 @@ public class Submarine extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel submarineAmmoCountLbl;
+    private javax.swing.JSpinner submarineAmmoCountSpinner;
+    private javax.swing.JLabel submarineArareaLbl;
+    private javax.swing.JLabel submarineEnergyLbl;
+    private javax.swing.JSlider submarineEnergySlider;
+    private javax.swing.JLabel submarineLbl;
+    private javax.swing.JTextArea submarineMsgTextArea;
+    private javax.swing.JTextField submarineMsgTextField;
+    private javax.swing.JLabel submarineOxigenLbl;
+    private javax.swing.JSlider submarineOxigenSlider;
+    private javax.swing.JCheckBox submarinePositionCheckBox;
+    private javax.swing.JScrollPane submarineScrollPane;
+    private javax.swing.JButton submarineSendBtn;
+    private javax.swing.JButton submarineShootBtn;
+    private javax.swing.JLabel submarineSoldierCountLbl;
+    private javax.swing.JSpinner submarineSoldierCountSpinner;
+    private javax.swing.JButton submarineSonarOperationBtn;
+    private javax.swing.JButton submarineTomahawkMissileBtn;
+    private javax.swing.JButton submarineTridentMissileBtn;
     // End of variables declaration//GEN-END:variables
 }
