@@ -5,6 +5,7 @@
 package defensesystem.view;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
@@ -23,8 +24,13 @@ public class Tank extends javax.swing.JFrame {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
-        int y = 50;
+        int y = 20;
         this.setLocation(x, y);
+        
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/defensesystem/utils/tank.gif"));
+        Image scaledImage = originalIcon.getImage().getScaledInstance(350, -1, Image.SCALE_DEFAULT);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        tankLbl.setIcon(scaledIcon);
     }
 
     /**
@@ -36,22 +42,199 @@ public class Tank extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        tankArareaLbl = new javax.swing.JLabel();
+        tankSoldierCountLbl = new javax.swing.JLabel();
+        tankAmmoCountLbl = new javax.swing.JLabel();
+        tankSlider = new javax.swing.JSlider();
+        tankScrollPane = new javax.swing.JScrollPane();
+        tankMsgTextArea = new javax.swing.JTextArea();
+        tankMsgTextField = new javax.swing.JTextField();
+        tankAmmoCountSpinner = new javax.swing.JSpinner();
+        tankSendBtn = new javax.swing.JButton();
+        tankMissileOperationBtn = new javax.swing.JButton();
+        tankPositionCheckBox = new javax.swing.JCheckBox();
+        tankLbl = new javax.swing.JLabel();
+        tankSoldierCountSpinner = new javax.swing.JSpinner();
+        tankRotateShootingBtn = new javax.swing.JButton();
+        tankShootBtn = new javax.swing.JButton();
+        tankRedarOperationBtn = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tank");
         setPreferredSize(new java.awt.Dimension(700, 450));
+        setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setPreferredSize(new java.awt.Dimension(700, 500));
+        jPanel1.setLayout(null);
+
+        tankArareaLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        tankArareaLbl.setForeground(new java.awt.Color(255, 204, 0));
+        tankArareaLbl.setText("Area Not Cleared");
+        tankArareaLbl.setMaximumSize(new java.awt.Dimension(100, 30));
+        tankArareaLbl.setMinimumSize(new java.awt.Dimension(100, 30));
+        tankArareaLbl.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel1.add(tankArareaLbl);
+        tankArareaLbl.setBounds(380, 20, 140, 30);
+
+        tankSoldierCountLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        tankSoldierCountLbl.setForeground(new java.awt.Color(255, 255, 255));
+        tankSoldierCountLbl.setText("Soldier Count : ");
+        jPanel1.add(tankSoldierCountLbl);
+        tankSoldierCountLbl.setBounds(380, 70, 116, 30);
+
+        tankAmmoCountLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        tankAmmoCountLbl.setForeground(new java.awt.Color(255, 255, 255));
+        tankAmmoCountLbl.setText("Ammo Count :");
+        jPanel1.add(tankAmmoCountLbl);
+        tankAmmoCountLbl.setBounds(380, 120, 109, 30);
+
+        tankSlider.setBackground(new java.awt.Color(255, 255, 255));
+        tankSlider.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tankSlider.setForeground(new java.awt.Color(255, 255, 255));
+        tankSlider.setMajorTickSpacing(20);
+        tankSlider.setMinorTickSpacing(10);
+        tankSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        tankSlider.setPaintLabels(true);
+        tankSlider.setPaintTicks(true);
+        tankSlider.setSnapToTicks(true);
+        jPanel1.add(tankSlider);
+        tankSlider.setBounds(600, 100, 70, 280);
+
+        tankMsgTextArea.setBackground(new java.awt.Color(0, 0, 0));
+        tankMsgTextArea.setColumns(20);
+        tankMsgTextArea.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        tankMsgTextArea.setForeground(new java.awt.Color(255, 255, 255));
+        tankMsgTextArea.setRows(5);
+        tankMsgTextArea.setPreferredSize(new java.awt.Dimension(300, 114));
+        tankScrollPane.setViewportView(tankMsgTextArea);
+
+        jPanel1.add(tankScrollPane);
+        tankScrollPane.setBounds(10, 200, 350, 160);
+
+        tankMsgTextField.setBackground(new java.awt.Color(51, 51, 51));
+        tankMsgTextField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        tankMsgTextField.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(tankMsgTextField);
+        tankMsgTextField.setBounds(10, 360, 280, 40);
+
+        tankAmmoCountSpinner.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jPanel1.add(tankAmmoCountSpinner);
+        tankAmmoCountSpinner.setBounds(500, 120, 80, 30);
+
+        tankSendBtn.setBackground(new java.awt.Color(0, 51, 51));
+        tankSendBtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        tankSendBtn.setForeground(new java.awt.Color(255, 255, 255));
+        tankSendBtn.setText("Send");
+        tankSendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tankSendBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tankSendBtn);
+        tankSendBtn.setBounds(290, 360, 70, 40);
+
+        tankMissileOperationBtn.setBackground(new java.awt.Color(0, 102, 102));
+        tankMissileOperationBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tankMissileOperationBtn.setForeground(new java.awt.Color(255, 255, 255));
+        tankMissileOperationBtn.setText("Missile Operation");
+        tankMissileOperationBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        tankMissileOperationBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        tankMissileOperationBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        tankMissileOperationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tankMissileOperationBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tankMissileOperationBtn);
+        tankMissileOperationBtn.setBounds(380, 230, 200, 50);
+
+        tankPositionCheckBox.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        tankPositionCheckBox.setForeground(new java.awt.Color(0, 204, 204));
+        tankPositionCheckBox.setText("Position");
+        tankPositionCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tankPositionCheckBoxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tankPositionCheckBox);
+        tankPositionCheckBox.setBounds(580, 20, 110, 30);
+        jPanel1.add(tankLbl);
+        tankLbl.setBounds(10, 10, 350, 180);
+
+        tankSoldierCountSpinner.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jPanel1.add(tankSoldierCountSpinner);
+        tankSoldierCountSpinner.setBounds(500, 70, 80, 30);
+
+        tankRotateShootingBtn.setBackground(new java.awt.Color(0, 102, 102));
+        tankRotateShootingBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tankRotateShootingBtn.setForeground(new java.awt.Color(255, 255, 255));
+        tankRotateShootingBtn.setText("Rotate Shooting");
+        tankRotateShootingBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        tankRotateShootingBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        tankRotateShootingBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        jPanel1.add(tankRotateShootingBtn);
+        tankRotateShootingBtn.setBounds(380, 350, 200, 50);
+
+        tankShootBtn.setBackground(new java.awt.Color(0, 102, 102));
+        tankShootBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tankShootBtn.setForeground(new java.awt.Color(255, 255, 255));
+        tankShootBtn.setText("Shoot");
+        tankShootBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        tankShootBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        tankShootBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        tankShootBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tankShootBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tankShootBtn);
+        tankShootBtn.setBounds(380, 170, 200, 50);
+
+        tankRedarOperationBtn.setBackground(new java.awt.Color(0, 102, 102));
+        tankRedarOperationBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tankRedarOperationBtn.setForeground(new java.awt.Color(255, 255, 255));
+        tankRedarOperationBtn.setText("Redar Operation");
+        tankRedarOperationBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        tankRedarOperationBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        tankRedarOperationBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        jPanel1.add(tankRedarOperationBtn);
+        tankRedarOperationBtn.setBounds(380, 290, 200, 50);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 758, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 163, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 484, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 127, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tankSendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankSendBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tankSendBtnActionPerformed
+
+    private void tankMissileOperationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankMissileOperationBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tankMissileOperationBtnActionPerformed
+
+    private void tankPositionCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankPositionCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tankPositionCheckBoxActionPerformed
+
+    private void tankShootBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankShootBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tankShootBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,5 +272,22 @@ public class Tank extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel tankAmmoCountLbl;
+    private javax.swing.JSpinner tankAmmoCountSpinner;
+    private javax.swing.JLabel tankArareaLbl;
+    private javax.swing.JLabel tankLbl;
+    private javax.swing.JButton tankMissileOperationBtn;
+    private javax.swing.JTextArea tankMsgTextArea;
+    private javax.swing.JTextField tankMsgTextField;
+    private javax.swing.JCheckBox tankPositionCheckBox;
+    private javax.swing.JButton tankRedarOperationBtn;
+    private javax.swing.JButton tankRotateShootingBtn;
+    private javax.swing.JScrollPane tankScrollPane;
+    private javax.swing.JButton tankSendBtn;
+    private javax.swing.JButton tankShootBtn;
+    private javax.swing.JSlider tankSlider;
+    private javax.swing.JLabel tankSoldierCountLbl;
+    private javax.swing.JSpinner tankSoldierCountSpinner;
     // End of variables declaration//GEN-END:variables
 }
