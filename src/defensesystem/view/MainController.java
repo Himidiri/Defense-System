@@ -101,7 +101,7 @@ public class MainController extends javax.swing.JFrame {
         selectDefence.setBounds(390, 20, 180, 40);
 
         areaClearCheckBox.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
-        areaClearCheckBox.setForeground(new java.awt.Color(0, 204, 204));
+        areaClearCheckBox.setForeground(new java.awt.Color(255, 204, 0));
         areaClearCheckBox.setText("Area Clear");
         areaClearCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,7 +177,7 @@ public class MainController extends javax.swing.JFrame {
         sendPrivateCheckBox.setBounds(660, 20, 150, 40);
 
         positionLbl.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
-        positionLbl.setForeground(new java.awt.Color(255, 255, 255));
+        positionLbl.setForeground(new java.awt.Color(0, 204, 204));
         positionLbl.setText("Position");
         positionLbl.setMaximumSize(new java.awt.Dimension(100, 20));
         positionLbl.setMinimumSize(new java.awt.Dimension(100, 20));

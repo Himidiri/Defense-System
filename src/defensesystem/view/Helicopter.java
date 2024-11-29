@@ -5,6 +5,7 @@
 package defensesystem.view;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
@@ -22,9 +23,14 @@ public class Helicopter extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/defensesystem/utils/helicopter-icon.png")).getImage());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = 50;
-        int y = 50;
+        int x = 20;
+        int y = 20;
         this.setLocation(x, y);
+
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/defensesystem/utils/helicopter.gif"));
+        Image scaledImage = originalIcon.getImage().getScaledInstance(350, -1, Image.SCALE_DEFAULT);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        helicopterLbl.setIcon(scaledIcon);
     }
 
     /**
@@ -36,22 +42,188 @@ public class Helicopter extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        helicoptArareaLbl = new javax.swing.JLabel();
+        helicopterSoldierCountLbl = new javax.swing.JLabel();
+        helicopterAmmoCountLbl = new javax.swing.JLabel();
+        helicopterSlider = new javax.swing.JSlider();
+        helicopterScrollPane = new javax.swing.JScrollPane();
+        helicopterMsgTextArea = new javax.swing.JTextArea();
+        helicopterMsgTextField = new javax.swing.JTextField();
+        helicopterAmmoCountSpinner = new javax.swing.JSpinner();
+        helicopterSendBtn = new javax.swing.JButton();
+        helicopterMissileOperationBtn = new javax.swing.JButton();
+        helicopterPositionCheckBox = new javax.swing.JCheckBox();
+        helicopterLbl = new javax.swing.JLabel();
+        helicopterSoldierCountSpinner = new javax.swing.JSpinner();
+        helicopterLaserOperationBtn = new javax.swing.JButton();
+        helicopterShootBtn = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Helicopter");
         setPreferredSize(new java.awt.Dimension(700, 450));
+        setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setPreferredSize(new java.awt.Dimension(700, 500));
+        jPanel1.setLayout(null);
+
+        helicoptArareaLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        helicoptArareaLbl.setForeground(new java.awt.Color(255, 204, 0));
+        helicoptArareaLbl.setText("Area Not Cleared");
+        helicoptArareaLbl.setMaximumSize(new java.awt.Dimension(100, 30));
+        helicoptArareaLbl.setMinimumSize(new java.awt.Dimension(100, 30));
+        helicoptArareaLbl.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel1.add(helicoptArareaLbl);
+        helicoptArareaLbl.setBounds(380, 20, 140, 30);
+
+        helicopterSoldierCountLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        helicopterSoldierCountLbl.setForeground(new java.awt.Color(255, 255, 255));
+        helicopterSoldierCountLbl.setText("Soldier Count : ");
+        jPanel1.add(helicopterSoldierCountLbl);
+        helicopterSoldierCountLbl.setBounds(380, 70, 116, 30);
+
+        helicopterAmmoCountLbl.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        helicopterAmmoCountLbl.setForeground(new java.awt.Color(255, 255, 255));
+        helicopterAmmoCountLbl.setText("Ammo Count :");
+        jPanel1.add(helicopterAmmoCountLbl);
+        helicopterAmmoCountLbl.setBounds(380, 120, 109, 30);
+
+        helicopterSlider.setBackground(new java.awt.Color(255, 255, 255));
+        helicopterSlider.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        helicopterSlider.setForeground(new java.awt.Color(255, 255, 255));
+        helicopterSlider.setMajorTickSpacing(20);
+        helicopterSlider.setMinorTickSpacing(10);
+        helicopterSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        helicopterSlider.setPaintLabels(true);
+        helicopterSlider.setPaintTicks(true);
+        helicopterSlider.setSnapToTicks(true);
+        jPanel1.add(helicopterSlider);
+        helicopterSlider.setBounds(600, 100, 70, 280);
+
+        helicopterMsgTextArea.setBackground(new java.awt.Color(0, 0, 0));
+        helicopterMsgTextArea.setColumns(20);
+        helicopterMsgTextArea.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        helicopterMsgTextArea.setForeground(new java.awt.Color(255, 255, 255));
+        helicopterMsgTextArea.setRows(5);
+        helicopterMsgTextArea.setPreferredSize(new java.awt.Dimension(300, 114));
+        helicopterScrollPane.setViewportView(helicopterMsgTextArea);
+
+        jPanel1.add(helicopterScrollPane);
+        helicopterScrollPane.setBounds(10, 200, 350, 160);
+
+        helicopterMsgTextField.setBackground(new java.awt.Color(51, 51, 51));
+        helicopterMsgTextField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        helicopterMsgTextField.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(helicopterMsgTextField);
+        helicopterMsgTextField.setBounds(10, 360, 280, 40);
+
+        helicopterAmmoCountSpinner.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jPanel1.add(helicopterAmmoCountSpinner);
+        helicopterAmmoCountSpinner.setBounds(500, 120, 80, 30);
+
+        helicopterSendBtn.setBackground(new java.awt.Color(0, 51, 51));
+        helicopterSendBtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        helicopterSendBtn.setForeground(new java.awt.Color(255, 255, 255));
+        helicopterSendBtn.setText("Send");
+        helicopterSendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helicopterSendBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(helicopterSendBtn);
+        helicopterSendBtn.setBounds(290, 360, 70, 40);
+
+        helicopterMissileOperationBtn.setBackground(new java.awt.Color(0, 102, 102));
+        helicopterMissileOperationBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        helicopterMissileOperationBtn.setForeground(new java.awt.Color(255, 255, 255));
+        helicopterMissileOperationBtn.setText("Missile Operation");
+        helicopterMissileOperationBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        helicopterMissileOperationBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        helicopterMissileOperationBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        helicopterMissileOperationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helicopterMissileOperationBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(helicopterMissileOperationBtn);
+        helicopterMissileOperationBtn.setBounds(380, 260, 200, 50);
+
+        helicopterPositionCheckBox.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        helicopterPositionCheckBox.setForeground(new java.awt.Color(0, 204, 204));
+        helicopterPositionCheckBox.setText("Position");
+        helicopterPositionCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helicopterPositionCheckBoxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(helicopterPositionCheckBox);
+        helicopterPositionCheckBox.setBounds(580, 20, 110, 30);
+        jPanel1.add(helicopterLbl);
+        helicopterLbl.setBounds(10, 10, 350, 180);
+
+        helicopterSoldierCountSpinner.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jPanel1.add(helicopterSoldierCountSpinner);
+        helicopterSoldierCountSpinner.setBounds(500, 70, 80, 30);
+
+        helicopterLaserOperationBtn.setBackground(new java.awt.Color(0, 102, 102));
+        helicopterLaserOperationBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        helicopterLaserOperationBtn.setForeground(new java.awt.Color(255, 255, 255));
+        helicopterLaserOperationBtn.setText("Laser Operation");
+        helicopterLaserOperationBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        helicopterLaserOperationBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        helicopterLaserOperationBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        jPanel1.add(helicopterLaserOperationBtn);
+        helicopterLaserOperationBtn.setBounds(380, 330, 200, 50);
+
+        helicopterShootBtn.setBackground(new java.awt.Color(0, 102, 102));
+        helicopterShootBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        helicopterShootBtn.setForeground(new java.awt.Color(255, 255, 255));
+        helicopterShootBtn.setText("Shoot");
+        helicopterShootBtn.setMaximumSize(new java.awt.Dimension(180, 30));
+        helicopterShootBtn.setMinimumSize(new java.awt.Dimension(180, 30));
+        helicopterShootBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        helicopterShootBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helicopterShootBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(helicopterShootBtn);
+        helicopterShootBtn.setBounds(380, 190, 200, 50);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 27, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void helicopterSendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helicopterSendBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_helicopterSendBtnActionPerformed
+
+    private void helicopterPositionCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helicopterPositionCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_helicopterPositionCheckBoxActionPerformed
+
+    private void helicopterShootBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helicopterShootBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_helicopterShootBtnActionPerformed
+
+    private void helicopterMissileOperationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helicopterMissileOperationBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_helicopterMissileOperationBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,5 +261,21 @@ public class Helicopter extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel helicoptArareaLbl;
+    private javax.swing.JLabel helicopterAmmoCountLbl;
+    private javax.swing.JSpinner helicopterAmmoCountSpinner;
+    private javax.swing.JButton helicopterLaserOperationBtn;
+    private javax.swing.JLabel helicopterLbl;
+    private javax.swing.JButton helicopterMissileOperationBtn;
+    private javax.swing.JTextArea helicopterMsgTextArea;
+    private javax.swing.JTextField helicopterMsgTextField;
+    private javax.swing.JCheckBox helicopterPositionCheckBox;
+    private javax.swing.JScrollPane helicopterScrollPane;
+    private javax.swing.JButton helicopterSendBtn;
+    private javax.swing.JButton helicopterShootBtn;
+    private javax.swing.JSlider helicopterSlider;
+    private javax.swing.JLabel helicopterSoldierCountLbl;
+    private javax.swing.JSpinner helicopterSoldierCountSpinner;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
