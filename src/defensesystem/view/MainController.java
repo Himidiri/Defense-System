@@ -4,9 +4,16 @@
  */
 package defensesystem.view;
 
+import defensesystem.controller.Observable;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /**
  *
@@ -14,17 +21,24 @@ import javax.swing.ImageIcon;
  */
 public class MainController extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainController
-     */
-    public MainController() {
+    private int totalSoldiers = 0;
+    private int totalAmmo = 0;
+    private int tankFuel = 100;
+    private int helicopterFuel = 100;
+    private int submarineFuel = 100;
+    private Observable observable;
+
+    public MainController(Observable observable) {
+        this.observable = observable;
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/defensesystem/utils/icon.png")).getImage());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (screenSize.width / 2) + 5 / 2; 
-        int y = 30 * 2 + this.getHeight(); 
+        int x = (screenSize.width / 2) + 5 / 2;
+        int y = 30 * 2 + this.getHeight();
         this.setLocation(x, y);
+
+        setVisible(true);
     }
 
     /**
@@ -37,11 +51,9 @@ public class MainController extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        msgScrollPane = new javax.swing.JScrollPane();
-        msgTextArea = new javax.swing.JTextArea();
         sendMsgTextField = new javax.swing.JTextField();
         sendBtn = new javax.swing.JButton();
-        selectDefence = new javax.swing.JComboBox<>();
+        selectDefense = new javax.swing.JComboBox<>();
         areaClearCheckBox = new javax.swing.JCheckBox();
         soldierCountLbl = new javax.swing.JLabel();
         setSoldierCount = new javax.swing.JLabel();
@@ -52,37 +64,24 @@ public class MainController extends javax.swing.JFrame {
         sendPrivateCheckBox = new javax.swing.JCheckBox();
         positionLbl = new javax.swing.JLabel();
         positionSlider = new javax.swing.JSlider();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        infoTextArea = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        msgTextPane = new javax.swing.JTextPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        infoTextPane = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MainController");
         setBackground(new java.awt.Color(0, 153, 153));
-        setPreferredSize(new java.awt.Dimension(820, 450));
+        setPreferredSize(new java.awt.Dimension(820, 480));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
-        jPanel1.setPreferredSize(new java.awt.Dimension(820, 500));
+        jPanel1.setPreferredSize(new java.awt.Dimension(820, 480));
         jPanel1.setLayout(null);
-
-        msgTextArea.setBackground(new java.awt.Color(0, 0, 0));
-        msgTextArea.setColumns(20);
-        msgTextArea.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        msgTextArea.setForeground(new java.awt.Color(255, 255, 255));
-        msgTextArea.setRows(5);
-        msgScrollPane.setViewportView(msgTextArea);
-
-        jPanel1.add(msgScrollPane);
-        msgScrollPane.setBounds(390, 80, 390, 180);
 
         sendMsgTextField.setBackground(new java.awt.Color(51, 51, 51));
         sendMsgTextField.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         sendMsgTextField.setForeground(new java.awt.Color(255, 255, 255));
-        sendMsgTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendMsgTextFieldActionPerformed(evt);
-            }
-        });
         jPanel1.add(sendMsgTextField);
         sendMsgTextField.setBounds(390, 270, 300, 40);
 
@@ -98,13 +97,17 @@ public class MainController extends javax.swing.JFrame {
         jPanel1.add(sendBtn);
         sendBtn.setBounds(700, 270, 80, 40);
 
-        selectDefence.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
-        selectDefence.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Defence", "Helicopter", "Tank", "Submarine" }));
-        selectDefence.setMinimumSize(new java.awt.Dimension(150, 30));
-        selectDefence.setPreferredSize(new java.awt.Dimension(120, 30));
-        jPanel1.add(selectDefence);
-        selectDefence.setBounds(390, 20, 180, 40);
+        selectDefense.setBackground(new java.awt.Color(51, 51, 51));
+        selectDefense.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        selectDefense.setForeground(new java.awt.Color(255, 153, 0));
+        selectDefense.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Defense", "Helicopter", "Tank", "Submarine" }));
+        selectDefense.setEnabled(false);
+        selectDefense.setMinimumSize(new java.awt.Dimension(150, 30));
+        selectDefense.setPreferredSize(new java.awt.Dimension(120, 30));
+        jPanel1.add(selectDefense);
+        selectDefense.setBounds(390, 20, 180, 40);
 
+        areaClearCheckBox.setBackground(new java.awt.Color(0, 51, 51));
         areaClearCheckBox.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         areaClearCheckBox.setForeground(new java.awt.Color(255, 204, 0));
         areaClearCheckBox.setText("Area Clear");
@@ -127,7 +130,6 @@ public class MainController extends javax.swing.JFrame {
 
         setSoldierCount.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         setSoldierCount.setForeground(new java.awt.Color(255, 255, 255));
-        setSoldierCount.setText("2000");
         setSoldierCount.setMaximumSize(new java.awt.Dimension(30, 20));
         setSoldierCount.setMinimumSize(new java.awt.Dimension(30, 20));
         setSoldierCount.setPreferredSize(new java.awt.Dimension(30, 20));
@@ -145,7 +147,6 @@ public class MainController extends javax.swing.JFrame {
 
         setAmmoAmount.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         setAmmoAmount.setForeground(new java.awt.Color(255, 255, 255));
-        setAmmoAmount.setText("3444");
         setAmmoAmount.setMaximumSize(new java.awt.Dimension(30, 20));
         setAmmoAmount.setMinimumSize(new java.awt.Dimension(30, 20));
         setAmmoAmount.setPreferredSize(new java.awt.Dimension(30, 20));
@@ -163,13 +164,13 @@ public class MainController extends javax.swing.JFrame {
 
         setFuelAmount.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         setFuelAmount.setForeground(new java.awt.Color(255, 255, 255));
-        setFuelAmount.setText("3444");
         setFuelAmount.setMaximumSize(new java.awt.Dimension(30, 20));
         setFuelAmount.setMinimumSize(new java.awt.Dimension(30, 20));
         setFuelAmount.setPreferredSize(new java.awt.Dimension(30, 20));
         jPanel1.add(setFuelAmount);
         setFuelAmount.setBounds(140, 60, 70, 50);
 
+        sendPrivateCheckBox.setBackground(new java.awt.Color(0, 51, 51));
         sendPrivateCheckBox.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         sendPrivateCheckBox.setForeground(new java.awt.Color(0, 204, 204));
         sendPrivateCheckBox.setText("Send Private");
@@ -190,7 +191,7 @@ public class MainController extends javax.swing.JFrame {
         jPanel1.add(positionLbl);
         positionLbl.setBounds(390, 310, 130, 50);
 
-        positionSlider.setBackground(new java.awt.Color(0, 204, 204));
+        positionSlider.setBackground(new java.awt.Color(0, 51, 51));
         positionSlider.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         positionSlider.setForeground(new java.awt.Color(255, 255, 255));
         positionSlider.setMajorTickSpacing(20);
@@ -199,18 +200,31 @@ public class MainController extends javax.swing.JFrame {
         positionSlider.setPaintTicks(true);
         positionSlider.setSnapToTicks(true);
         positionSlider.setValue(0);
+        positionSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                positionSliderStateChanged(evt);
+            }
+        });
         jPanel1.add(positionSlider);
-        positionSlider.setBounds(380, 340, 410, 60);
+        positionSlider.setBounds(380, 350, 410, 60);
 
-        infoTextArea.setBackground(new java.awt.Color(0, 0, 0));
-        infoTextArea.setColumns(20);
-        infoTextArea.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        infoTextArea.setForeground(new java.awt.Color(255, 255, 255));
-        infoTextArea.setRows(5);
-        jScrollPane1.setViewportView(infoTextArea);
+        msgTextPane.setBackground(new java.awt.Color(0, 0, 0));
+        msgTextPane.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        msgTextPane.setForeground(new java.awt.Color(255, 255, 255));
+        msgTextPane.setPreferredSize(new java.awt.Dimension(272, 109));
+        jScrollPane2.setViewportView(msgTextPane);
 
-        jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 150, 350, 250);
+        jPanel1.add(jScrollPane2);
+        jScrollPane2.setBounds(390, 90, 390, 170);
+
+        infoTextPane.setBackground(new java.awt.Color(0, 0, 0));
+        infoTextPane.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        infoTextPane.setForeground(new java.awt.Color(255, 255, 255));
+        infoTextPane.setPreferredSize(new java.awt.Dimension(272, 109));
+        jScrollPane3.setViewportView(infoTextPane);
+
+        jPanel1.add(jScrollPane3);
+        jScrollPane3.setBounds(10, 150, 350, 280);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,81 +232,74 @@ public class MainController extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 98, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 65, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void areaClearCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_areaClearCheckBoxActionPerformed
-        // TODO add your handling code here:
+        boolean select = areaClearCheckBox.isSelected();
+        System.out.println(select);
+        observable.setArea(select);
     }//GEN-LAST:event_areaClearCheckBoxActionPerformed
 
-    private void sendMsgTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMsgTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sendMsgTextFieldActionPerformed
-
     private void sendPrivateCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendPrivateCheckBoxActionPerformed
-        // TODO add your handling code here:
+        boolean isPvtSelect = sendPrivateCheckBox.isSelected();
+        if (isPvtSelect) {
+            selectDefense.setEnabled(true);
+        } else {
+            selectDefense.setEnabled(false);
+        }
     }//GEN-LAST:event_sendPrivateCheckBoxActionPerformed
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
-        // TODO add your handling code here:
+        String message = sendMsgTextField.getText();
+        boolean isPrivate = sendPrivateCheckBox.isSelected();
+        String selectedDefense = (String) selectDefense.getSelectedItem();
+
+        if (message.isEmpty()) {
+            appendStyledText(msgTextPane, "Error : Please type your message!", Color.RED);
+            return;
+        }
+        if (isPrivate && (selectedDefense == null || selectedDefense.equals("Select Defense"))) {
+            appendStyledText(msgTextPane, "Error : Please select a defense to send a private message", Color.RED);
+            sendMsgTextField.setText("");
+            return;
+        }
+        if (isPrivate && selectedDefense != null && !selectedDefense.equals("Select Defence")) {
+            observable.broadcastMessage(message, true, selectedDefense);
+            appendStyledText(msgTextPane, "To " + selectedDefense + " : " + message, Color.GREEN);
+        } else if (!isPrivate) {
+            observable.broadcastMessage(message, false, "All");
+            appendStyledText(msgTextPane, "To All : " + message, Color.WHITE);
+        }
+        sendMsgTextField.setText("");
     }//GEN-LAST:event_sendBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void positionSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_positionSliderStateChanged
+        observable.SetBtnEnable(positionSlider.getValue());
+    }//GEN-LAST:event_positionSliderStateChanged
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainController().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ammoAmountLbl;
     private javax.swing.JCheckBox areaClearCheckBox;
     private javax.swing.JLabel fuelAmountLbl;
-    private javax.swing.JTextArea infoTextArea;
+    private javax.swing.JTextPane infoTextPane;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane msgScrollPane;
-    private javax.swing.JTextArea msgTextArea;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextPane msgTextPane;
     private javax.swing.JLabel positionLbl;
     private javax.swing.JSlider positionSlider;
-    private javax.swing.JComboBox<String> selectDefence;
+    private javax.swing.JComboBox<String> selectDefense;
     private javax.swing.JButton sendBtn;
     private javax.swing.JTextField sendMsgTextField;
     private javax.swing.JCheckBox sendPrivateCheckBox;
@@ -301,4 +308,55 @@ public class MainController extends javax.swing.JFrame {
     private javax.swing.JLabel setSoldierCount;
     private javax.swing.JLabel soldierCountLbl;
     // End of variables declaration//GEN-END:variables
+
+    public void updateTotalCounts(int soldierDifference, int ammoDifference) {
+        totalSoldiers += soldierDifference;
+        totalAmmo += ammoDifference;
+
+        setSoldierCount.setText(String.valueOf(totalSoldiers));
+        setAmmoAmount.setText(String.valueOf(totalAmmo));
+    }
+
+    public void updateFuel(String defenseName, int fuelValue) {
+        switch (defenseName) {
+            case "Tank":
+                tankFuel = fuelValue;
+                break;
+            case "Helicopter":
+                helicopterFuel = fuelValue;
+                break;
+            case "Submarine":
+                submarineFuel = fuelValue;
+                break;
+        }
+
+        int totalFuel = tankFuel + helicopterFuel + submarineFuel;
+        setFuelAmount.setText(String.valueOf(totalFuel));
+
+        if (fuelValue < 30) {
+            appendInfoText(defenseName + ": Fuel level low! Immediate resupply needed.", Color.RED);
+        }
+    }
+
+    public void receiveMessage(String message, boolean isPrivate, String sender) {
+        if (!isPrivate) {
+            appendStyledText(msgTextPane, "[From " + sender + "] : " + message, Color.YELLOW);
+        } else {
+            appendStyledText(msgTextPane, "[Private from " + sender + "] : " + message, Color.GREEN);
+        }
+    }
+
+    public void appendStyledText(JTextPane textPane, String text, Color color) {
+        StyledDocument doc = textPane.getStyledDocument();
+        SimpleAttributeSet style = new SimpleAttributeSet();
+        StyleConstants.setForeground(style, color);
+        try {
+            doc.insertString(doc.getLength(), text + "\n", style);
+        } catch (BadLocationException e) {
+        }
+    }
+
+    public void appendInfoText(String text, Color color) {
+        appendStyledText(infoTextPane, text, color);
+    }
 }

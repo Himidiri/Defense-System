@@ -4,6 +4,9 @@
  */
 package defensesystem.view;
 
+import defensesystem.models.SuperDefence;
+import defensesystem.utils.Strength;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -13,24 +16,36 @@ import javax.swing.ImageIcon;
  *
  * @author Himidiri Himakanika
  */
-public class Tank extends javax.swing.JFrame {
+public class Tank extends SuperDefence {
 
-    /**
-     * Creates new form Tank
-     */
-    public Tank() {
+    private int soldierCount = 200;
+    private int ammoCount = 500;
+    private boolean isFirstShoot = true;
+    private boolean isFirstMissileOperation = true;
+    private boolean isFirstRadarOperation = true;
+    private boolean isFirstRotateShooting = true;
+
+    public Tank(MainController mainController) {
+        super(mainController, "Tank");
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/defensesystem/utils/tank.png")).getImage());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (screenSize.width / 2) - this.getWidth() - 5 / 2; 
-        int y = 30 * 2 + this.getHeight(); 
+        int x = (screenSize.width / 2) - this.getWidth() - 5 / 2;
+        int y = 30 * 2 + this.getHeight();
         this.setLocation(x, y);
-        
+
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/defensesystem/utils/tank.gif"));
         Image scaledImage = originalIcon.getImage().getScaledInstance(350, -1, Image.SCALE_DEFAULT);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         tankLbl.setIcon(scaledIcon);
+
+        tankSoldierCountSpinner.setValue(soldierCount);
+        tankAmmoCountSpinner.setValue(ammoCount);
+        notifyMainControllerInitialCounts();
+        mainController.updateFuel("Tank", tankSlider.getValue());
+
+        setVisible(true);
     }
 
     /**
@@ -47,11 +62,7 @@ public class Tank extends javax.swing.JFrame {
         tankSoldierCountLbl = new javax.swing.JLabel();
         tankAmmoCountLbl = new javax.swing.JLabel();
         tankSlider = new javax.swing.JSlider();
-        tankScrollPane = new javax.swing.JScrollPane();
-        tankMsgTextArea = new javax.swing.JTextArea();
-        tankMsgTextField = new javax.swing.JTextField();
         tankAmmoCountSpinner = new javax.swing.JSpinner();
-        tankSendBtn = new javax.swing.JButton();
         tankMissileOperationBtn = new javax.swing.JButton();
         tankPositionCheckBox = new javax.swing.JCheckBox();
         tankLbl = new javax.swing.JLabel();
@@ -59,10 +70,14 @@ public class Tank extends javax.swing.JFrame {
         tankRotateShootingBtn = new javax.swing.JButton();
         tankShootBtn = new javax.swing.JButton();
         tankRedarOperationBtn = new javax.swing.JButton();
+        tankMsgTextField = new javax.swing.JTextField();
+        tankSendBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tankMsgTextPane = new javax.swing.JTextPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tank");
-        setPreferredSize(new java.awt.Dimension(700, 450));
+        setPreferredSize(new java.awt.Dimension(700, 480));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
@@ -90,7 +105,7 @@ public class Tank extends javax.swing.JFrame {
         jPanel1.add(tankAmmoCountLbl);
         tankAmmoCountLbl.setBounds(380, 120, 109, 30);
 
-        tankSlider.setBackground(new java.awt.Color(255, 255, 255));
+        tankSlider.setBackground(new java.awt.Color(51, 51, 51));
         tankSlider.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         tankSlider.setForeground(new java.awt.Color(255, 255, 255));
         tankSlider.setMajorTickSpacing(20);
@@ -100,46 +115,28 @@ public class Tank extends javax.swing.JFrame {
         tankSlider.setPaintTicks(true);
         tankSlider.setSnapToTicks(true);
         tankSlider.setValue(100);
+        tankSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tankSliderStateChanged(evt);
+            }
+        });
         jPanel1.add(tankSlider);
         tankSlider.setBounds(600, 100, 70, 280);
 
-        tankMsgTextArea.setBackground(new java.awt.Color(0, 0, 0));
-        tankMsgTextArea.setColumns(20);
-        tankMsgTextArea.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        tankMsgTextArea.setForeground(new java.awt.Color(255, 255, 255));
-        tankMsgTextArea.setRows(5);
-        tankMsgTextArea.setPreferredSize(new java.awt.Dimension(300, 114));
-        tankScrollPane.setViewportView(tankMsgTextArea);
-
-        jPanel1.add(tankScrollPane);
-        tankScrollPane.setBounds(10, 200, 350, 160);
-
-        tankMsgTextField.setBackground(new java.awt.Color(51, 51, 51));
-        tankMsgTextField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        tankMsgTextField.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(tankMsgTextField);
-        tankMsgTextField.setBounds(10, 360, 280, 40);
-
         tankAmmoCountSpinner.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jPanel1.add(tankAmmoCountSpinner);
-        tankAmmoCountSpinner.setBounds(500, 120, 80, 30);
-
-        tankSendBtn.setBackground(new java.awt.Color(0, 51, 51));
-        tankSendBtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        tankSendBtn.setForeground(new java.awt.Color(255, 255, 255));
-        tankSendBtn.setText("Send");
-        tankSendBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tankSendBtnActionPerformed(evt);
+        tankAmmoCountSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tankAmmoCountSpinnerStateChanged(evt);
             }
         });
-        jPanel1.add(tankSendBtn);
-        tankSendBtn.setBounds(290, 360, 70, 40);
+        jPanel1.add(tankAmmoCountSpinner);
+        tankAmmoCountSpinner.setBounds(500, 120, 80, 30);
 
         tankMissileOperationBtn.setBackground(new java.awt.Color(0, 102, 102));
         tankMissileOperationBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tankMissileOperationBtn.setForeground(new java.awt.Color(255, 255, 255));
         tankMissileOperationBtn.setText("Missile Operation");
+        tankMissileOperationBtn.setEnabled(false);
         tankMissileOperationBtn.setMaximumSize(new java.awt.Dimension(180, 30));
         tankMissileOperationBtn.setMinimumSize(new java.awt.Dimension(180, 30));
         tankMissileOperationBtn.setPreferredSize(new java.awt.Dimension(180, 30));
@@ -149,22 +146,23 @@ public class Tank extends javax.swing.JFrame {
             }
         });
         jPanel1.add(tankMissileOperationBtn);
-        tankMissileOperationBtn.setBounds(380, 230, 200, 50);
+        tankMissileOperationBtn.setBounds(380, 240, 200, 50);
 
+        tankPositionCheckBox.setBackground(new java.awt.Color(51, 51, 51));
         tankPositionCheckBox.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         tankPositionCheckBox.setForeground(new java.awt.Color(0, 204, 204));
         tankPositionCheckBox.setText("Position");
-        tankPositionCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tankPositionCheckBoxActionPerformed(evt);
-            }
-        });
         jPanel1.add(tankPositionCheckBox);
         tankPositionCheckBox.setBounds(580, 20, 110, 30);
         jPanel1.add(tankLbl);
         tankLbl.setBounds(10, 10, 350, 180);
 
         tankSoldierCountSpinner.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        tankSoldierCountSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tankSoldierCountSpinnerStateChanged(evt);
+            }
+        });
         jPanel1.add(tankSoldierCountSpinner);
         tankSoldierCountSpinner.setBounds(500, 70, 80, 30);
 
@@ -172,16 +170,23 @@ public class Tank extends javax.swing.JFrame {
         tankRotateShootingBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tankRotateShootingBtn.setForeground(new java.awt.Color(255, 255, 255));
         tankRotateShootingBtn.setText("Rotate Shooting");
+        tankRotateShootingBtn.setEnabled(false);
         tankRotateShootingBtn.setMaximumSize(new java.awt.Dimension(180, 30));
         tankRotateShootingBtn.setMinimumSize(new java.awt.Dimension(180, 30));
         tankRotateShootingBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        tankRotateShootingBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tankRotateShootingBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(tankRotateShootingBtn);
-        tankRotateShootingBtn.setBounds(380, 350, 200, 50);
+        tankRotateShootingBtn.setBounds(380, 380, 200, 50);
 
         tankShootBtn.setBackground(new java.awt.Color(0, 102, 102));
         tankShootBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tankShootBtn.setForeground(new java.awt.Color(255, 255, 255));
         tankShootBtn.setText("Shoot");
+        tankShootBtn.setEnabled(false);
         tankShootBtn.setMaximumSize(new java.awt.Dimension(180, 30));
         tankShootBtn.setMinimumSize(new java.awt.Dimension(180, 30));
         tankShootBtn.setPreferredSize(new java.awt.Dimension(180, 30));
@@ -197,11 +202,44 @@ public class Tank extends javax.swing.JFrame {
         tankRedarOperationBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tankRedarOperationBtn.setForeground(new java.awt.Color(255, 255, 255));
         tankRedarOperationBtn.setText("Redar Operation");
+        tankRedarOperationBtn.setEnabled(false);
         tankRedarOperationBtn.setMaximumSize(new java.awt.Dimension(180, 30));
         tankRedarOperationBtn.setMinimumSize(new java.awt.Dimension(180, 30));
         tankRedarOperationBtn.setPreferredSize(new java.awt.Dimension(180, 30));
+        tankRedarOperationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tankRedarOperationBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(tankRedarOperationBtn);
-        tankRedarOperationBtn.setBounds(380, 290, 200, 50);
+        tankRedarOperationBtn.setBounds(380, 310, 200, 50);
+
+        tankMsgTextField.setBackground(new java.awt.Color(51, 51, 51));
+        tankMsgTextField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        tankMsgTextField.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(tankMsgTextField);
+        tankMsgTextField.setBounds(10, 390, 260, 40);
+
+        tankSendBtn.setBackground(new java.awt.Color(0, 51, 51));
+        tankSendBtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        tankSendBtn.setForeground(new java.awt.Color(255, 255, 255));
+        tankSendBtn.setText("Send");
+        tankSendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tankSendBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tankSendBtn);
+        tankSendBtn.setBounds(280, 390, 80, 40);
+
+        tankMsgTextPane.setBackground(new java.awt.Color(0, 0, 0));
+        tankMsgTextPane.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        tankMsgTextPane.setForeground(new java.awt.Color(255, 255, 255));
+        tankMsgTextPane.setPreferredSize(new java.awt.Dimension(272, 109));
+        jScrollPane1.setViewportView(tankMsgTextPane);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 200, 350, 180);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -221,74 +259,220 @@ public class Tank extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tankSendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankSendBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tankSendBtnActionPerformed
-
     private void tankMissileOperationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankMissileOperationBtnActionPerformed
-        // TODO add your handling code here:
+        int tankAmmo = (Integer) tankAmmoCountSpinner.getValue();
+        if (isFirstMissileOperation) {
+            mainController.appendInfoText("Tank : initiating missile operations!", Color.GREEN);
+            isFirstMissileOperation = false;
+        }
+
+        if (tankAmmo >= 10) {
+            tankAmmo -= 10;
+            tankAmmoCountSpinner.setValue(tankAmmo);
+            //mainController.appendInfoText("Tank launched a missile! Remaining ammo : " + tankAmmo, Color.WHITE);
+
+            reduceSoldiersRandomly();
+
+            if (tankAmmo < 20) {
+                mainController.appendInfoText("Tank : Critical ammo levels! Immediate resupply needed.", Color.ORANGE);
+            }
+        } else {
+            mainController.appendInfoText("Tank : Unable to launch missile. Out of ammo!", Color.RED);
+        }
     }//GEN-LAST:event_tankMissileOperationBtnActionPerformed
 
-    private void tankPositionCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankPositionCheckBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tankPositionCheckBoxActionPerformed
-
     private void tankShootBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankShootBtnActionPerformed
-        // TODO add your handling code here:
+        int tankAmmo = (Integer) tankAmmoCountSpinner.getValue();
+        if (isFirstShoot) {
+            mainController.appendInfoText("Tank Starting Shoot!", Color.GREEN);
+            isFirstShoot = false;
+        }
+
+        if (tankAmmo > 0) {
+            tankAmmo--;
+            tankAmmoCountSpinner.setValue(tankAmmo);
+            //mainController.appendInfoText("Tank fired! Remaining ammo : " + tankAmmo, Color.WHITE);
+
+            reduceSoldiersRandomly();
+
+            if (tankAmmo < 20) {
+                mainController.appendInfoText("Tank : Critical ammo levels! Immediate resupply needed.", Color.ORANGE);
+            }
+
+        } else {
+            mainController.appendInfoText("Tank : Out of ammo!", Color.RED);
+        }
     }//GEN-LAST:event_tankShootBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tank.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tank.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tank.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tank.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void tankSendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankSendBtnActionPerformed
+        String message = tankMsgTextField.getText().trim();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Tank().setVisible(true);
+        if (message.isEmpty()) {
+            mainController.appendStyledText(tankMsgTextPane, "Error : Please type your message!", Color.RED);
+            return;
+        }
+        mainController.appendStyledText(tankMsgTextPane, "Me : " + message, Color.WHITE);
+        mainController.receiveMessage(message, false, "Tank");
+        tankMsgTextField.setText("");
+    }//GEN-LAST:event_tankSendBtnActionPerformed
+
+    private void tankSoldierCountSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tankSoldierCountSpinnerStateChanged
+        int currentSoldierCount = (Integer) tankSoldierCountSpinner.getValue();
+        int soldierDifference = currentSoldierCount - soldierCount;
+        soldierCount = currentSoldierCount;
+        mainController.updateTotalCounts(soldierDifference, 0);
+    }//GEN-LAST:event_tankSoldierCountSpinnerStateChanged
+
+    private void tankAmmoCountSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tankAmmoCountSpinnerStateChanged
+        int currentAmmoCount = (Integer) tankAmmoCountSpinner.getValue();
+        int ammoDifference = currentAmmoCount - ammoCount;
+        ammoCount = currentAmmoCount;
+        mainController.updateTotalCounts(0, ammoDifference);
+        checkAmmoCount();
+    }//GEN-LAST:event_tankAmmoCountSpinnerStateChanged
+
+    private void tankRedarOperationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankRedarOperationBtnActionPerformed
+        int tankAmmo = (Integer) tankAmmoCountSpinner.getValue();
+
+        if (isFirstRadarOperation) {
+            mainController.appendInfoText("Tank initiating radar operations!", Color.GREEN);
+            isFirstRadarOperation = false;
+        }
+
+        if (tankAmmo >= 5) {
+            tankAmmo -= 5;
+            tankAmmoCountSpinner.setValue(tankAmmo);
+            //mainController.appendInfoText("Tank radar sweep completed! Remaining ammo : " + tankAmmo, Color.WHITE);
+
+            reduceSoldiersRandomly();
+
+            if (tankAmmo < 20) {
+                mainController.appendInfoText("Tank : Critical ammo levels! Immediate resupply needed.", Color.ORANGE);
             }
-        });
-    }
+        } else {
+            mainController.appendInfoText("Tank : Unable to perform radar operation. Out of ammo!", Color.RED);
+        }
+    }//GEN-LAST:event_tankRedarOperationBtnActionPerformed
+
+    private void tankRotateShootingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankRotateShootingBtnActionPerformed
+        int tankAmmo = (Integer) tankAmmoCountSpinner.getValue();
+
+        if (isFirstRotateShooting) {
+            mainController.appendInfoText("Tank initiating rotate shooting!", Color.GREEN);
+            isFirstRotateShooting = false;
+        }
+
+        if (tankAmmo >= 15) {
+            tankAmmo -= 15;
+            tankAmmoCountSpinner.setValue(tankAmmo);
+            //mainController.appendInfoText("Tank performed rotate shooting! Remaining ammo : " + tankAmmo, Color.WHITE);
+
+            reduceSoldiersRandomly();
+
+            if (tankAmmo < 20) {
+                mainController.appendInfoText("Tank : Critical ammo levels! Immediate resupply needed.", Color.ORANGE);
+            }
+        } else {
+            mainController.appendInfoText("Tank : Unable to perform rotate shooting. Out of ammo!", Color.RED);
+        }
+    }//GEN-LAST:event_tankRotateShootingBtnActionPerformed
+
+    private void tankSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tankSliderStateChanged
+        int tankFuel = tankSlider.getValue();
+        mainController.updateFuel("Tank", tankFuel);
+    }//GEN-LAST:event_tankSliderStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel tankAmmoCountLbl;
     private javax.swing.JSpinner tankAmmoCountSpinner;
     private javax.swing.JLabel tankArareaLbl;
     private javax.swing.JLabel tankLbl;
     private javax.swing.JButton tankMissileOperationBtn;
-    private javax.swing.JTextArea tankMsgTextArea;
     private javax.swing.JTextField tankMsgTextField;
+    private javax.swing.JTextPane tankMsgTextPane;
     private javax.swing.JCheckBox tankPositionCheckBox;
     private javax.swing.JButton tankRedarOperationBtn;
     private javax.swing.JButton tankRotateShootingBtn;
-    private javax.swing.JScrollPane tankScrollPane;
     private javax.swing.JButton tankSendBtn;
     private javax.swing.JButton tankShootBtn;
     private javax.swing.JSlider tankSlider;
     private javax.swing.JLabel tankSoldierCountLbl;
     private javax.swing.JSpinner tankSoldierCountSpinner;
     // End of variables declaration//GEN-END:variables
+
+    private void notifyMainControllerInitialCounts() {
+        mainController.updateTotalCounts(soldierCount, ammoCount);
+    }
+
+    private void checkAmmoCount() {
+        int tankAmmo = (Integer) tankAmmoCountSpinner.getValue();
+        if (tankAmmo < 10) {
+            mainController.appendInfoText("Tank : Need help! Ammo count getting low (" + tankAmmo + ")", Color.ORANGE);
+        }
+    }
+
+    private void reduceSoldiersRandomly() {
+        int currentSoldierCount = (Integer) tankSoldierCountSpinner.getValue();
+        int soldiersToReduce = (int) (Math.random() * 5) + 1;
+
+        currentSoldierCount -= soldiersToReduce;
+        if (currentSoldierCount < 0) {
+            currentSoldierCount = 0;
+        }
+        tankSoldierCountSpinner.setValue(currentSoldierCount);
+
+        if (currentSoldierCount > 0 && currentSoldierCount < 10) {
+            mainController.appendInfoText("Tank: Soldier count getting low! Only " + currentSoldierCount + " left!", Color.RED);
+        } else if (currentSoldierCount == 0) {
+            mainController.appendInfoText("Tank : Out of soldiers! Tank shutting down operations.", Color.RED);
+            dispose();
+        }
+    }
+
+    @Override
+    public void updateAreaClear(boolean status) {
+        tankArareaLbl.setText(status ? "Area Cleared" : "Area Not Cleared");
+    }
+
+    @Override
+    public void btnEnable(int value) {
+        boolean select = tankPositionCheckBox.isSelected();
+        if (select) {
+            if (value > Strength.LOW.value) {
+                tankShootBtn.setEnabled(true);
+            } else {
+                tankShootBtn.setEnabled(false);
+            }
+            if (value > Strength.MEDIUM.value) {
+                tankMissileOperationBtn.setEnabled(true);
+            } else {
+                tankMissileOperationBtn.setEnabled(false);
+            }
+            if (value > Strength.HIGH.value) {
+                tankRedarOperationBtn.setEnabled(true);
+            } else {
+                tankRedarOperationBtn.setEnabled(false);
+            }
+            if (value > Strength.STRONG.value) {
+                tankRotateShootingBtn.setEnabled(true);
+            } else {
+                tankRotateShootingBtn.setEnabled(false);
+            }
+        } else {
+            tankShootBtn.setEnabled(false);
+            tankMissileOperationBtn.setEnabled(false);
+            tankRedarOperationBtn.setEnabled(false);
+            tankRotateShootingBtn.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void receiveMessage(String message, boolean isPrivate, String senderOrTarget) {
+        if (!isPrivate || senderOrTarget.equals("Tank") || senderOrTarget.equals("All")) {
+            mainController.appendStyledText(tankMsgTextPane, "[From MainController] : " + message, Color.YELLOW);
+        }
+    }
 }
