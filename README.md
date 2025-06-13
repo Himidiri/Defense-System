@@ -19,3 +19,5 @@ https://github.com/user-attachments/assets/3fba6e72-a7c3-4692-b76d-51051d0b509f
    ```sh
    git clone https://github.com/Himidiri/Defense-System.git
    ```
+2. Open the project in NetBeans:
+   `File → Open Project → Select project folder`
