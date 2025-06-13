@@ -15,7 +15,7 @@ This project is a Java-based simulation of a defense system that uses the **Obse
 https://github.com/user-attachments/assets/3fba6e72-a7c3-4692-b76d-51051d0b509f
 
 ## How to Run
-Clone the repository:
+1. Clone the repository:
    ```sh
    git clone https://github.com/Himidiri/Defense-System.git
    ```
