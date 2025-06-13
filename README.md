@@ -21,3 +21,5 @@ https://github.com/user-attachments/assets/3fba6e72-a7c3-4692-b76d-51051d0b509f
    ```
 2. Open the project in NetBeans:
    `File → Open Project → Select project folder`
+3. Run the application:
+   `Starter.java`
